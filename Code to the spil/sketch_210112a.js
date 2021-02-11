@@ -10,18 +10,23 @@ var frame;
 var SCENE_W = 1600;
 var SCENE_H = 800;
 var enemy;
+var collectibles;
 
 
 function setup() {
   createCanvas(1600, 800);
   collectibles = new Group();
   
+  
   for(var j=0; j<10; j++)
   {
     var dot = createSprite(random(0, width), random(0, height));
     dot.addAnimation('normal', 'assets/small_circle0001.png', 'assets/small_circle0001.png');
-    collectibles.add(dot);
+      dot.maxSpeed = 5;
+        collectibles.add(dot);
   }
+ 
+
 
 
   //create a sprite and add the 3 animations
@@ -49,6 +54,11 @@ function setup() {
 
 function draw() {
   background(255, 255, 255);
+
+for( let i = 0; i < collectibles.size(); i++){
+var a = collectibles.get(i); 
+a.attractionPoint(2, ghost.position.x, ghost.position.y); 
+}
 
   //mouse trailer, the speed is inversely proportional to the mouse distance
   ghost.velocity.x = (camera.mouseX-ghost.position.x)/20;
@@ -104,9 +114,10 @@ function mousePressed() {
   //now you can use the variable to set properties
   //e.g. a random velocity on the x and y coordinates
   s.velocity.x = (camera.mouseX-ghost.position.x)/2;
-  s.velocity.y = (camera.mouseY-ghost.position.y)/2;
+  s.velocity.y = (camera.mouseY-ghost.position.y)/2; 
 }
-  collectibles.attractionPoint(0.2, ghost.position.x, ghost.position.y);
-  //since the force keeps incrementing the speed you can
-  //set a limit to it with maxSpeed
-  collectibles.maxSpeed = 5;
+
+
+
+
+ 
